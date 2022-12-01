@@ -2,34 +2,28 @@ import {readInputFile} from "../../Utils/inputToArray";
 
 const input = readInputFile("./input.txt");
 
-function sonarScan(scans: number[]) {
-  let count: number = 0;
-  let prev: number = undefined;
-  scans.forEach((scan) => {
-    if (!prev) {
-      prev = scan;
-      return;
+function totalCals(totals: number[]){
+  let current = 1
+  let elf = {}
+  totals.forEach(food => {
+    if(food === 0){
+      current += 1
+      return
     }
-    if (scan > prev) {
-      count += 1;
+    if(elf[current]){
+      elf[current] += food
+    }else{
+      elf[current] = food
     }
-    prev = scan;
-  });
-  console.log("Answer", count);
+  })
+  const values: number[] = Object.values(elf);
+  const answer1 = Math.max(...values);
+  console.log('Answer1', answer1);
+
+  values.sort((a, b) => a - b);
+  values.reverse()
+  const answer2 = values[0] + values[1] + values[2];
+  console.log('Answer2', answer2)
 }
 
-function sonarScanAdd(scans: number[]) {
-  let count: number = 0;
-  let prev: number = undefined;
-  for (let a = 2; a < scans.length; a++) {
-    let scan = scans[a] + scans[a - 1] + scans[a - 2];
-    if (scan > prev) {
-      count += 1;
-    }
-    prev = scan;
-  }
-  console.log("Answer2", count);
-}
-
-sonarScan(input);
-sonarScanAdd(input);
+totalCals(input)
