@@ -2,18 +2,19 @@ import {readInputFile} from "../../Utils/inputToArray";
 
 const input = readInputFile("./input.txt");
 
-function totalCals(totals: number[]){
+function totalCals(totals: string[]){
   let current = 1
   let elf = {}
   totals.forEach(food => {
-    if(food === 0){
+    const foodNumber = Number(food)
+    if(foodNumber === 0){
       current += 1
       return
     }
     if(elf[current]){
-      elf[current] += food
+      elf[current] += foodNumber
     }else{
-      elf[current] = food
+      elf[current] = foodNumber
     }
   })
   const values: number[] = Object.values(elf);
